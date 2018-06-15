@@ -17,9 +17,9 @@ while lines[index] != "0":
 			break
 		
 		elif "high" in text:
-			maxx = guess if guess < maxx else maxx
+			maxx = min(maxx, guess)
 		else :
-			low = guess if guess > low else low
+			low = max(low, guess)
 		
 		if low >= maxx:
 			print("Stan is dishonest")
