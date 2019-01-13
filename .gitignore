@@ -1,0 +1,7 @@
+.idea/
+.kattisrc
+algorithms.py
+input.txt
+runkatiss.sh
+submit.py
+test.py
