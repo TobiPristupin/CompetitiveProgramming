@@ -1,7 +1,5 @@
 .vscode/
 input.txt
-algorithms.py
-algorithms.cpp
 *.out
 test.cpp
 test.py
