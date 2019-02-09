@@ -1,7 +1,9 @@
-.idea/
-.kattisrc
-algorithms.py
+.vscode/
 input.txt
-runkatiss.sh
-submit.py
+algorithms.py
+algorithms.cpp
+*.out
+test.cpp
 test.py
+*.in
+*.out
