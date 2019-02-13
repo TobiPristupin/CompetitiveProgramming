@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+#define ll long long
+
 
 /*
 Properties of mod:
@@ -14,8 +16,8 @@ void fast_io(){
 }
 
 //string to binary using mod properties to avoid overflow. Remember to mod again if required
-long long string_to_binary_mod(string bin, long long mod){
-    long long sum = 0;
+ll string_to_binary_mod(string bin, ll mod){
+    ll sum = 0;
     reverse(bin.begin(), bin.end());
     for(int i = 0; i < bin.length(); i++){
         sum += fmod((stoll(bin.substr(i, 1)) * pow(2, i)), mod);
@@ -25,7 +27,7 @@ long long string_to_binary_mod(string bin, long long mod){
 }
 
 //Example convert to base
-long long to_ternary(long long x){
+ll to_ternary(ll x){
     string digits = "";
     lldiv_t divmod;
     do {
@@ -40,8 +42,8 @@ long long to_ternary(long long x){
 }
 
 //Example convert from base to decimal
-long from_ternary(long x){
-    long sum = 0, digit = 0;
+ll from_ternary(ll x){
+    ll sum = 0, digit = 0;
     do {
         sum += (x % 10) * pow(3, digit);
         digit++;
@@ -49,4 +51,40 @@ long from_ternary(long x){
     } while (x > 0);
     
     return sum;
+}
+
+vector<ll> sieve_erastothenes(unsigned ll limit){
+    vector<bool> prime(limit, true);
+    for (int p = 2; p*p <= limit; p++){
+        if (prime[p]){
+            for (int i = p*p; i <= limit; i += p){
+                prime[i] = false;
+            }
+        }
+    }
+
+    vector<ll> ans;
+    for (int i = 2; i <= limit; i++){
+        if (prime[i]){
+            ans.push_back(i);
+        }
+    }
+
+    return ans;
+}
+
+bool is_prime(ll n) { 
+    if (n <= 1)  return false; 
+    if (n <= 3)  return true; 
+    if (n % 2 == 0 || n % 3 == 0) return false; 
+  
+    for (ll i = 5; i * i <= n; i += 6) 
+        if (n % i == 0 || n % (i+2) == 0) 
+           return false; 
+  
+    return true; 
+} 
+
+int main(){
+    cout << is_prime(pow(10, 10) - 1) << endl;
 }
