@@ -85,6 +85,39 @@ bool is_prime(ll n) {
     return true; 
 } 
 
+ll binary_search(vector<ll> vec, ll x){
+    ll lo = 0, hi = vec.size() - 1, mid;
+    while (lo <= hi){
+        mid = (lo + hi) / 2;
+        if (vec.at(mid) < x){
+            lo = mid + 1;
+        } else if (vec.at(mid) > x){
+            hi = mid - 1;
+        } else {
+            return mid;
+        }
+    }
+
+    return -1;
+}
+
+ll binary_insertion_pos(vector<ll> vec, ll x){
+    ll lo = 0, hi = vec.size() - 1, mid;
+    while (lo <= hi){
+        mid = (lo + hi) / 2;
+        if (vec.at(mid) < x){
+            lo = mid + 1;
+        } else if (vec.at(mid) > x){
+            hi = mid - 1;
+        } else {
+            return mid;
+        }
+    }
+
+    return lo;
+}
+
 int main(){
-    cout << is_prime(pow(10, 10) - 1) << endl;
+    vector<ll> vec {1, 2, 3, 4, 5, 6, 7, 8};
+    cout << binary_insertion_pos(vec, -10) << endl;
 }
