@@ -37,7 +37,7 @@ int main(){
     while (c.length() < a.length()) c = "0" + c;
     
     string b = "";
-    for (ll i = 0; i < a.length(); i++){
+    for (unsigned ll i = 0; i < a.length(); i++){
         int cdigit = stoi(c.substr(i, 1));
         int adigit =  stoi(a.substr(i, 1));
     
