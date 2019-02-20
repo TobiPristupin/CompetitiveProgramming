@@ -41,6 +41,29 @@ ll to_ternary(ll x){
     return stoll(digits);
 }
 
+
+string to_base(ll x, ll b){
+    string letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    string digits = "";
+    lldiv_t divmod;
+
+    if (b == 1){
+        for (int i = 0; i < x; i++){
+            digits += "1";
+        }
+        return digits;
+    }
+
+    do {
+        divmod = div(x, b);
+        x = divmod.quot;
+        digits += letters.at(divmod.rem);
+    } while (x > 0);
+
+    reverse(digits.begin(), digits.end());
+    return digits;
+}
+
 //Example convert from base to decimal
 ll from_ternary(ll x){
     ll sum = 0, digit = 0;
@@ -117,7 +140,18 @@ ll binary_insertion_pos(vector<ll> vec, ll x){
     return lo;
 }
 
+bool palindrome(ll x){
+    string s = to_string(x);
+    for (int c = 0; c < s.length() / 2; c++){
+        if (s[c] != s[s.length() - c - 1]){
+            return false;
+        }
+    }
+
+    return true;
+}
+
 int main(){
     vector<ll> vec {1, 2, 3, 4, 5, 6, 7, 8};
-    cout << binary_insertion_pos(vec, -10) << endl;
+    cout << to_base(16, 16) << endl;
 }
