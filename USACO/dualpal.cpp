@@ -1,7 +1,7 @@
 /*
 ID: tobiasp1
 TASK: dualpal
-LANG: C++                 
+LANG: C++
 */
 
 #include <bits/stdc++.h>

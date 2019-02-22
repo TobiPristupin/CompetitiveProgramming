@@ -1,8 +1,11 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 #define ll long long
 
+// int main(){
+//     ios::sync_with_stdio(0), cin.tie(0);
+//     return 0;
+// } 
 
 /*
 Properties of mod:
@@ -10,10 +13,6 @@ Properties of mod:
 (a*b) % m = (a mod m * b mod m) mod m
 */
 
-void fast_io(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-}
 
 //string to binary using mod properties to avoid overflow. Remember to mod again if required
 ll string_to_binary_mod(string bin, ll mod){
@@ -151,7 +150,25 @@ bool palindrome(ll x){
     return true;
 }
 
+bool valid_parenthesis(string s){
+    stack<char> stak;
+    vector<char> opening = {'('}, closing = {')'};
+    for (char c : s){
+        if (find(opening.begin(), opening.end(), c) != opening.end()){
+            stak.push(c);
+        } else if (find(closing.begin(), closing.end(), c) != closing.end()){
+            int index = distance(find(closing.begin(), closing.end(), c), closing.begin());
+            if (stak.empty() || stak.top() != opening[index]){
+                return false;
+            }
+            stak.pop();
+        }
+    }
+
+    return stak.empty();
+}
+
 int main(){
     vector<ll> vec {1, 2, 3, 4, 5, 6, 7, 8};
-    cout << to_base(16, 16) << endl;
+    cout << valid_parenthesis("))") << endl;
 }
