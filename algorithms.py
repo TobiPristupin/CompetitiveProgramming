@@ -2,40 +2,6 @@ from timeit import timeit
 from collections import *
 import itertools
 
-graph = {
-    "A": ["B"],
-    "B": ["C", "R"],
-    "C": ["D"],
-    "D": ["B"],
-    "R": ["A", "C"],
-    "Z": ["D", "A"]
-}
-
-class Node:
-
-    def __init__(self, value, adjacent=[]):
-        self.value = value
-        self.adjacent = deque(adjacent)
-
-    def add(self, node):
-        self.adjacent.extend(node)
-
-    def __eq__(self, other):
-        return isinstance(other, self.__class__) and self.value == other.value
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
-
-    def __hash__(self):
-        return hash(self.value)
-
-    def __str__(self):
-        #return "Value: {}, Adjacent={}".format(self.value, [neighbor.value for neighbor in self.adjacent])
-        return str(self.value)
-
-    def __repr__(self):
-        return self.__str__()
-
 def binary_search_recursive(arr, target, lo, hi):
     mid = (lo + hi) // 2
     if lo >= hi:
@@ -60,10 +26,6 @@ def binary_search_iterative(arr, target):
             lo = mid + 1
     return -1
 
-
-print(binary_search_iterative([1, 2, 3, 4, 5, 6], 6))
-
-
 def bubblesort(arr):
     for i in range(len(arr)):
         for j in range(len(arr) - 1):
@@ -79,9 +41,6 @@ def selectionsort(arr):
                 min_index = j
         arr[i], arr[min_index] = arr[min_index], arr[i]
     return arr
-
-def mergesort(arr):
-    pass
 
 def binary_search_iter(target, arr):
     lo, hi = 0, len(arr) - 1
