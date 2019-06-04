@@ -260,3 +260,76 @@ def longest_increasing_subsequence(arr):
                 dp[i] = max(dp[j] + 1, dp[i])
 
     return max(dp)
+
+def component_size(graph, start, visited=None):
+    if not visited:
+        visited = set()
+    if start in visited:
+        return 0
+    visited.add(start)
+    return 1 + sum([component_size(graph, v, visited) for v in graph[start]])
+
+
+#0 Indexed
+class UnionFind():
+
+    def __init__(self, size):
+        self.id = [i for i in range(size)]
+        self.__size = [1 for i in range(size)]
+        self.__components = size
+    
+    def union(self, a, b):
+        root_a, root_b = self.find(a), self.find(b)
+        if root_a == root_b:
+            return #Already connected
+        if self.__size[root_a] > self.__size[root_b]:
+            self.id[root_b] = root_a
+            self.__size[root_a] += self.__size[root_b]
+        else:
+            self.id[root_a] = root_b
+            self.__size[root_b] += self.__size[root_a]
+
+        self.__components -= 1
+
+    def connected(self, a, b):
+        return self.find(a) == self.find(b)
+    
+    def find(self, a):
+        root = a
+        while self.id[root] != root:
+            root = self.id[root]
+        
+
+        #Path Compression
+        while a != root:
+            _next = self.id[a]
+            self.id[a] = root
+            a = _next
+
+        return root
+
+    def components(self):
+        return self.__components
+
+    def size(self, a):
+        return self.__size[self.find(a)]
+    
+    
+
+
+
+
+union = UnionFind(10)
+print(union.id)
+print(union.find(3))
+union.union(1, 2)
+union.union(2, 3)
+union.union(8, 9)
+union.union(8, 2)
+print(union.id)
+union.find(8)
+print(union.id)
+
+
+
+
