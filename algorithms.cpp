@@ -95,6 +95,22 @@ vector<ll> sieve_erastothenes(unsigned ll limit){
     return ans;
 }
 
+int num_divisors(ll n){
+    vector<ll> primes = sieve_erastothenes(n);
+    int total = 1;
+    for (ll p : primes){
+        int count = 0;
+        while (n % p == 0){
+            n = n / p;
+            count++;
+        }
+        total *= (count + 1);
+    }
+
+    return total;
+}
+
+
 bool is_prime(ll n) { 
     if (n <= 1)  return false; 
     if (n <= 3)  return true; 
