@@ -1,12 +1,4 @@
-11
-for 100
-for 100
-for 100
-for 100
-for 100
-add
-end
-end
-end
-end
-end
+15
+880000000000000
+
+
