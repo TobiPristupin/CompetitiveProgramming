@@ -2,16 +2,23 @@
 using namespace std;
 #define ll long long
 
-// int main(){
-//     ios::sync_with_stdio(0), cin.tie(0);
-//     return 0;
-// } 
+//ios::sync_with_stdio(0), cin.tie(0);
 
 /*
 Properties of mod:
 (a+b) % m = (a mod m + b mod m) mod m
 (a*b) % m = (a mod m * b mod m) mod m
 */
+
+/*
+vector - random access
+deque - lrandom access, ike a vector but includes push_front and pop_front methods
+list - Linked list, data is not contiguous. Fast insertion and deletion, no random access.
+stack/queue - provide an interface that wraps around deque
+bitset - optimized array of booleans
+map/set
+priority_queue
+ */
 
 
 //string to binary using mod properties to avoid overflow. Remember to mod again if required
@@ -139,33 +146,6 @@ ll binary_search(vector<ll> vec, ll x){
     return -1;
 }
 
-ll binary_insertion_pos(vector<ll> vec, ll x){
-    ll lo = 0, hi = vec.size() - 1, mid;
-    while (lo <= hi){
-        mid = (lo + hi) / 2;
-        if (vec.at(mid) < x){
-            lo = mid + 1;
-        } else if (vec.at(mid) > x){
-            hi = mid - 1;
-        } else {
-            return mid;
-        }
-    }
-
-    return lo;
-}
-
-bool palindrome(ll x){
-    string s = to_string(x);
-    for (int c = 0; c < s.length() / 2; c++){
-        if (s[c] != s[s.length() - c - 1]){
-            return false;
-        }
-    }
-
-    return true;
-}
-
 bool valid_parenthesis(string s){
     stack<char> stak;
     vector<char> opening = {'('}, closing = {')'};
@@ -255,23 +235,71 @@ class UnionFind {
         }
 };
 
+void rotate(v &vec){
+    for (int i = 0; i < vec.size(); i++){
+        for (int j = i + 1; j < vec.size(); j++){
+            swap(vec[i][j], vec[j][i]);
+        }
+    }
+
+    for (int r = 0; r < vec.size() / 2; r++){
+        swap(vec[r], vec[vec.size() - r - 1]);
+    }
+}
+
+//Add two strings that could overflow if treated as numbers
+string add_strings(string a, string b){
+    string ans = "";
+    bool carry = false;
+    while (a.length() < b.length()) a = "0" + a;
+    while (b.length() < a.length()) b = "0" + b;
+    for (int i = a.length() - 1; i >= 0; i--){
+        int sum = stoi(a.substr(i, 1)) + stoi(b.substr(i, 1));
+        if (carry){
+            sum++;
+            carry = false;
+        }
+        if (sum >= 10){
+            carry = true;
+            sum -= 10;
+        }
+        ans = to_string(sum) + ans;
+    }
+    if (carry) ans = "1" + ans;
+    return ans;
+}
+
+//compare two numbers stored as strings to avoid overflow
+bool compare_strings(string a, string b){
+    while (a.front() == '0') a.erase(a.begin());
+    while (b.front() == '0') b.erase(b.begin());
+    if (a.length() != b.length()) return a.length() > b.length();
+    for (int i = 0; i < a.length(); i++){
+        if (stoi(a.substr(i, 1)) > stoi(b.substr(i, 1))) return true;
+        if (stoi(a.substr(i, 1)) < stoi(b.substr(i, 1))) return false;
+    }
+    return true; 
+}
+
 int main(){
     vector<ll> vec {1, 2, 3, 4, 5, 6, 7, 8};
-    UnionFind disjoint = UnionFind(10);
+    cout << compare_strings("20", "020") << "\n";
+    
+    // UnionFind disjoint = UnionFind(10);
 
-    for (auto x : disjoint.getArr()) cout << x << " ";
-    cout << endl;
+    // for (auto x : disjoint.getArr()) cout << x << " ";
+    // cout << endl;
 
-    disjoint.unite(1, 2);
-    disjoint.unite(0, 2);
-    disjoint.unite(8, 9);
-    disjoint.unite(8, 1);
-    cout << disjoint.getSize(2) << endl;
-    disjoint.unite(6, 5);
-    cout << disjoint.getSize(6) << endl;
+    // disjoint.unite(1, 2);
+    // disjoint.unite(0, 2);
+    // disjoint.unite(8, 9);
+    // disjoint.unite(8, 1);
+    // cout << disjoint.getSize(2) << endl;
+    // disjoint.unite(6, 5);
+    // cout << disjoint.getSize(6) << endl;
     
 
     
-    for (auto x : disjoint.getArr()) cout << x << " ";
-    cout << endl;    
+    // for (auto x : disjoint.getArr()) cout << x << " ";
+    // cout << endl;    
 }

@@ -35,4 +35,5 @@ int main(){
     }
 
     cout << pos << "\n";
+
 }
