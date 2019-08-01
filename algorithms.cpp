@@ -17,6 +17,7 @@ list - Linked list, data is not contiguous. Fast insertion and deletion, no rand
 stack/queue - provide an interface that wraps around deque
 bitset - optimized array of booleans
 map/set
+multiset - set with duplicates
 priority_queue
  */
 
