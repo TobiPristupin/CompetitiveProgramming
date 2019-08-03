@@ -19,6 +19,9 @@ bitset - optimized array of booleans
 map/set
 multiset - set with duplicates
 priority_queue
+
+adjacency matrix - Can only be used if V is known. V*V space complexity, only feasible if V < 1000. O(V) to enumerate neighbors
+adjacency list - 
  */
 
 
@@ -165,6 +168,20 @@ bool valid_parenthesis(string s){
     return stak.empty();
 }
 
+// int component_size(const char &start){
+//     if (visited[start]){
+//         return 0;
+//     }
+
+//     visited[start] = true;
+//     int sum =  1;
+//     for (char neighbor : graph[start]){
+//         sum += component_size(neighbor);
+//     }
+    
+//     return sum;
+// }
+
 ll circle_mod(ll x, ll m){
     if (x == m){
         return x;
@@ -219,24 +236,16 @@ class UnionFind {
             components--;
         }
 
-        bool connected(int a, int b){
-            return find(a) == find(b);
-        }
+        bool connected(int a, int b){ return find(a) == find(b);}
 
-        int getComponents(){
-            return components;
-        }
+        int getComponents(){return components;}
 
-        int getSize(int a){
-            return size[find(a)];
-        }
+        int getSize(int a){return size[find(a)];}
 
-        vector<int> getArr(){
-            return id;
-        }
+        vector<int> getArr(){return id;}
 };
 
-void rotate(v &vec){
+void rotate(vector<vector<int>> &vec){
     for (int i = 0; i < vec.size(); i++){
         for (int j = i + 1; j < vec.size(); j++){
             swap(vec[i][j], vec[j][i]);

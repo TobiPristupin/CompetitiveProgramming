@@ -2,7 +2,6 @@ using namespace std;
 #define ll long long
 #include <bits/stdc++.h>
 
-
 unordered_map<char, vector<char>> graph;
 unordered_map<char, bool> visited;
 
@@ -53,15 +52,3 @@ int main(){
     }
 
 }
-
-// for (auto &p : graph){
-//     cout << p.first << ": ";
-//     for (auto x : p.second) cout << x << " ";
-//     cout << endl;
-// }
-
-// for (auto &p : visited){
-//     cout << p.first << ": " << p.second << " ";
-    
-// }
-// cout << endl;
