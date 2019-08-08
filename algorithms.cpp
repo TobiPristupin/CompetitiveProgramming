@@ -190,11 +190,10 @@ ll circle_mod(ll x, ll m){
 }
 
 class UnionFind {
-    private:
-        vector<int> id, size;
-        int components;
     
     public:
+        vector<int> id, size;
+        int components;
         UnionFind(int n){
             for (int i = 0; i < n; i++){
                 id.push_back(i);
@@ -238,12 +237,9 @@ class UnionFind {
 
         bool connected(int a, int b){ return find(a) == find(b);}
 
-        int getComponents(){return components;}
-
         int getSize(int a){return size[find(a)];}
-
-        vector<int> getArr(){return id;}
 };
+
 
 void rotate(vector<vector<int>> &vec){
     for (int i = 0; i < vec.size(); i++){
@@ -290,6 +286,8 @@ bool compare_strings(string a, string b){
     }
     return true; 
 }
+
+
 
 int main(){
     vector<ll> vec {1, 2, 3, 4, 5, 6, 7, 8};
