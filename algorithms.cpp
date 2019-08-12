@@ -25,17 +25,6 @@ adjacency list -
  */
 
 
-//string to binary using mod properties to avoid overflow. Remember to mod again if required
-ll string_to_binary_mod(string bin, ll mod){
-    ll sum = 0;
-    reverse(bin.begin(), bin.end());
-    for(int i = 0; i < bin.length(); i++){
-        sum += fmod((stoll(bin.substr(i, 1)) * pow(2, i)), mod);
-    }
-
-    return sum;
-}
-
 //Example convert to base
 ll to_ternary(ll x){
     string digits = "";
@@ -134,22 +123,6 @@ bool is_prime(ll n) {
     return true; 
 } 
 
-ll binary_search(vector<ll> vec, ll x){
-    ll lo = 0, hi = vec.size() - 1, mid;
-    while (lo <= hi){
-        mid = (lo + hi) / 2;
-        if (vec.at(mid) < x){
-            lo = mid + 1;
-        } else if (vec.at(mid) > x){
-            hi = mid - 1;
-        } else {
-            return mid;
-        }
-    }
-
-    return -1;
-}
-
 bool valid_parenthesis(string s){
     stack<char> stak;
     vector<char> opening = {'('}, closing = {')'};
@@ -181,13 +154,6 @@ bool valid_parenthesis(string s){
     
 //     return sum;
 // }
-
-ll circle_mod(ll x, ll m){
-    if (x == m){
-        return x;
-    }
-    return (x > 0) ? x % m : (x + m) % m;
-}
 
 class UnionFind {
     
@@ -287,27 +253,29 @@ bool compare_strings(string a, string b){
     return true; 
 }
 
+void all_orderings(){
+    vector<int> a {1, 2, 3, 4};
+    do {
+        //
+    } while (next_permutation(a.begin(), a.end()));
+}
+
+vector<vector<int>> all_subsets(vector<int> vec){
+    vector<vector<int>> subsets;
+    int n = vec.size();
+    // i << n is the same as 2**n
+    for (int i = 0; i < (1 << n); i++){
+        subsets.push_back(vector<int>());
+        for (int j = 0; j < n; j++){
+            if (i & (1 << j)){ //check if bit j is set
+                subsets.back().push_back(vec[j]);
+            }
+        }
+    }
+    return subsets;
+}
 
 
 int main(){
-    vector<ll> vec {1, 2, 3, 4, 5, 6, 7, 8};
-    cout << compare_strings("20", "020") << "\n";
-    
-    // UnionFind disjoint = UnionFind(10);
-
-    // for (auto x : disjoint.getArr()) cout << x << " ";
-    // cout << endl;
-
-    // disjoint.unite(1, 2);
-    // disjoint.unite(0, 2);
-    // disjoint.unite(8, 9);
-    // disjoint.unite(8, 1);
-    // cout << disjoint.getSize(2) << endl;
-    // disjoint.unite(6, 5);
-    // cout << disjoint.getSize(6) << endl;
-    
-
-    
-    // for (auto x : disjoint.getArr()) cout << x << " ";
-    // cout << endl;    
+     
 }
