@@ -1,62 +1,65 @@
 using namespace std;
 #define ll long long
 #include <bits/stdc++.h>
-using grid_t = vector<vector<bool>>;
 
+//column for a given row index
+int n;
+vector<int> column;
+vector<vector<bool>> col_blocked; 
+set<vector<int>> solutions;
 
-bool can_place(grid_t &grid, int r, int c){
-    if (grid[r][c] == 1){
-        return false;
-    }
+bool can_place(int r, int c){
+    if (col_blocked[r][c]) return false;
 
-    for (int col = 0; col < grid.size(); col++){
-        if (col != c && grid[r][col] == 1){
-            return false;
-        }
-    }
-
-    for (int row = 0; row < grid.size(); row++){
-        if (row != r && grid[row][c] == 1){
-            return false;
-        }
+    for (int prev = 0; prev < r; prev++) {
+        if (column[prev] == c || abs(c - column[prev]) == abs(r - prev)) return false;
     }
 
     return true;
 }
 
-int solve(grid_t &grid, int n){
-    if (n == 0){
-        return 1;
+void solve(int placed = 0, int r = 0){
+    if (placed == n){
+        solutions.insert(column);
     }
 
-    int sols = 0;
-    for (int r = 0; r < grid.size(); r++){
-        for (int c = 0; c < grid.size(); c++){
-            if (can_place(grid, r, c)){
-                grid[r][c] = true;
-                sols += solve(grid, n-1);
-                grid[r][c] = false;
-            }
-        }   
-    }
+    if (r == n) return;
 
-    return sols;
+    for (int c = 0; c < n; c++){
+        if (can_place(r, c)){
+            column[r] = c;
+            solve(placed + 1, r + 1);
+            column[r] = -1;
+        }
+    }
 }
 
 int main(){
-    int n, sol = 1;
+    int tc = 1;
     while (cin >> n){
         if (n == 0) break;
         
-        grid_t grid(n, vector<bool>(n, false));
+        column.resize(n); col_blocked.resize(n);
+        fill(column.begin(), column.end(), -1);
+        fill(col_blocked.begin(), col_blocked.end(), vector<bool>(n, false));
+        solutions.clear();
+        
         for (int i = 0; i < n; i++){
             string l;
             cin >> l;
             for (int j = 0; j < l.length(); j++){
-                if (l[j] == '*') grid[i][j] = true;
+                if (l[j] == '*') col_blocked[i][j] = true;
             }
         }
 
-        cout << "Case " << sol << ": " << solve(grid, n) << "\n";
+        solve();
+        cout << "Case " << tc << ": " << solutions.size() << "\n";
+        // for (auto r : solutions) {
+        //     for (auto x : r) {
+        //         cout << x << " ";
+        //     }
+        //     cout << endl;
+        // }
+        tc++;
     }
 }
