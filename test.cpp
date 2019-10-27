@@ -102,10 +102,5 @@ class A {
 
 
 int main(){
-    vector<vector<bool>> grid(8, vector<bool>(8, false));
-    grid[1][1] = true;
-    cout<< grid[1][1] << endl;
-    grid.clear();
-    grid.resize(8, vector<bool>(8, false));
-    cout<< grid[1][1] << endl;
+    
 }
