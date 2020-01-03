@@ -254,9 +254,10 @@ bool compare_strings(string a, string b){
 }
 
 void all_orderings(){
+    //a must be sorted if you want all orderings because next_permutation gives the next lexicographical permutation in order
     vector<int> a {1, 2, 3, 4};
     do {
-        //
+    
     } while (next_permutation(a.begin(), a.end()));
 }
 
