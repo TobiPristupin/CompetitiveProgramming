@@ -206,6 +206,9 @@ class UnionFind {
         int getSize(int a){return size[find(a)];}
 };
 
+bool power_of_two(ll x){
+    return ((x & (x - 1)) == 0);
+}
 
 void rotate(vector<vector<int>> &vec){
     for (int i = 0; i < vec.size(); i++){
