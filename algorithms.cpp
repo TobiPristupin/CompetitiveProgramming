@@ -2,7 +2,10 @@
 using namespace std;
 #define ll long long
 
-//ios::sync_with_stdio(0), cin.tie(0);
+/*
+Fast IO: 
+ios::sync_with_stdio(0), cin.tie(0);
+*/
 
 /*
 Properties of mod:
@@ -11,6 +14,7 @@ Properties of mod:
 */
 
 /*
+Data Structures
 vector - random access
 deque - lrandom access, ike a vector but includes push_front and pop_front methods
 list - Linked list, data is not contiguous. Fast insertion and deletion, no random access.
@@ -21,8 +25,22 @@ multiset - set with duplicates
 priority_queue
 
 adjacency matrix - Can only be used if V is known. V*V space complexity, only feasible if V < 1000. O(V) to enumerate neighbors
-adjacency list - 
- */
+*/
+
+/*
+STL Methods
+Sorting: sort, partial_sort (sort only a range), stable_sort (maintain initial order of items that are equal)
+Searching: upper_bound (iterator pointing to first element greater than val in log n complexity, must be sorted beforehand), 
+lower_bound (opposite from upper_bound), binary_search
+*/
+
+/*
+Debug a segfault
+g++ -g program.cpp
+gdb ./a.out
+run
+backtrace
+*/
 
 
 //Example convert to base
