@@ -101,6 +101,17 @@ class A {
 };
 
 
+bool split(ll x){
+    string s = to_string(x);
+    for (int i = 1; i < s.length(); i++){
+        cout << s.substr(0, i) << " " << s.substr(i, s.length()) << endl;
+    }
+}
+
 int main(){
-    
+    int x = 40;
+    int hours = x / 3600;
+    int minutes = (x % 3600) / 60;
+    int seconds = (x % 3600 % 60);
+    cout << hours << " " << minutes << " " << seconds << endl;
 }

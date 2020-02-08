@@ -313,22 +313,64 @@ class UnionFind():
 
     def size(self, a):
         return self.__size[self.find(a)]
+
+
+arr = [1, 3, -2, 8, -7]
+tree = [0] * (len(arr) * 4)
+
+def build(lo, hi, node=1):
+    if (lo == hi):
+        tree[node] = arr[lo]
+        return
     
+    mid = (lo + hi) // 2
+    build(lo, mid, 2*node)
+    build(mid + 1, hi, 2*node+1)
+    tree[node] = tree[2*node] + tree[2*node+1]
+
+def sum_query(lo, hi, start, end, node=1):
+    if start > hi or end < lo:
+        return 0
+    if start == lo and end == hi:
+        return tree[node]
     
+    mid = (lo + hi) // 2
+    left_sum = sum_query(lo, mid, start, min(end, mid), 2*node)
+    right_sum = sum_query(mid+1, hi, max(start, mid+1), end, 2*node+1)
+    return left_sum + right_sum
 
+def update(lo, hi, idx, val, node=1):
+    if lo == hi:
+        tree[node] = val
+        arr[idx] = val
+        return
+    
+    mid = (lo + hi) // 2
+    if idx <= mid:
+        update(lo, mid, idx, val, node*2)
+    else:
+        update(mid + 1, hi, idx, val, node*2+1)
+    
+    tree[node] = tree[2*node] + tree[2*node+1]
 
+def prime(n):
+    if n <= 1: return False
+    if n <= 3: return True
+    if n % 2 == 0 or n % 3 == 0: return False
 
+    i = 5
+    while i ** 2 <= n:
+        if n % i == 0 or n % (i+2) == 0:
+            return False
+        i += 6
+    
+    return True
 
-union = UnionFind(10)
-print(union.id)
-print(union.find(3))
-union.union(1, 2)
-union.union(2, 3)
-union.union(8, 9)
-union.union(8, 2)
-print(union.id)
-union.find(8)
-print(union.id)
+print(arr)
+build(0, len(arr) - 1)
+print(tree)
+update(0, len(arr) - 1, 3, 10)
+print(tree)
 
 
 

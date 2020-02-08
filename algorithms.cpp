@@ -159,6 +159,7 @@ bool valid_parenthesis(string s){
     return stak.empty();
 }
 
+
 // int component_size(const char &start){
 //     if (visited[start]){
 //         return 0;
