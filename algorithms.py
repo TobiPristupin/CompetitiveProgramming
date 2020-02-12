@@ -1,6 +1,9 @@
 from timeit import timeit
 from collections import *
 import itertools
+import bisect
+
+#bisect.bisect_left(arr, val) same as std:lower_bound. bisect_right same as std::upper_bound
 
 def binary_search_recursive(arr, target, lo, hi):
     mid = (lo + hi) // 2
