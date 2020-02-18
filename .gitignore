@@ -1,7 +1,9 @@
 .vscode/
 zzz*
 input.txt
+tempCodeRunnerFile.py
 tempCodeRunnerFile.cpp
-test.*
+test.py
+test.cpp
 CodeForces/input.txt
 
