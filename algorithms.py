@@ -369,11 +369,55 @@ def prime(n):
     
     return True
 
-print(arr)
-build(0, len(arr) - 1)
-print(tree)
-update(0, len(arr) - 1, 3, 10)
-print(tree)
+def kruskal_minspantree(edges: list):
+    #greedy algorithm
+    #1: sort the edges of the graph by their weights
+    #2: start adding edges to the mst starting from the lowest weight
+    #3: if an edge creates a cycle in the mst so far, don't add it. UFDS can be 
+    #used to check if a cycle is created.
+    mst_graph = UnionFind()
+    mst = deque()
+    cost = 0
+    edges.sort(key=lambda x: x[2]) #Assuming each edge is a (u, v, w) tuple
+    for edge in edges:
+        u, v, w = edge
+        if not mst_graph.connected(u, v):
+            mst.append(edge)
+            cost += w
+            mst_graph.union(u, v)
+
+    #if the length of mst if 0, no mst exists. 
+    #keep in mind that if the graph is not connected, this would yield two different
+    #mst's. Check for connectedness before using UFDS.components() == 1
+    
+    return cost #or mst if the actual tree is needed
+
+def matrix_prefix_sum(matrix: list):
+    #O(n) runtime
+    #dp[i, j] represents the sum of the rectangle spanning from (0, 0) to (i, j)
+    #dp[i, j] = dp[i-1][j] + dp[i][j-1] + matrix[i-1][j-1] - dp[i-1][j-1]
+    #sum_region(r1, c1, r2, c2) = dp[r2][c2] - dp[r2][c1-1] - dp[r1-1][c2] + dp[r1-1][c1-1]
+    #remember that dp size is (n+1) x (n+1), so the indices in matrix are shifted by one. sum_query assumes
+    #that the indices have already been shifted
+    n = len(matrix) 
+    dp = [[0 for i in range(n + 1)] for j in range(n + 1)]
+
+    for i in range(1, n+1):
+        for j in range(1,n+1):
+            dp[i][j] = dp[i-1][j] + dp[i][j-1] + matrix[i-1][j-1] - dp[i-1][j-1]
+
+    def sum_region(r1, c1, r2, c2):
+        r1, c1, r2, c2 = r1+1, c1+1, r2+1, c2+1
+        return dp[r2][c2] - dp[r2][c1-1] - dp[r1-1][c2] + dp[r1-1][c1-1] 
+    
+    return dp
+
+
+# print(arr)
+# build(0, len(arr) - 1)
+# print(tree)
+# update(0, len(arr) - 1, 3, 10)
+# print(tree)
 
 
 
