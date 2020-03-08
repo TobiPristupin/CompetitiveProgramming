@@ -412,7 +412,16 @@ def matrix_prefix_sum(matrix: list):
     
     return dp
 
+def max_range_sum(arr, i=0, cumsum=0):
+    # #find maximum sum that can be achieved by adding a range [i, j] of the array
+    dp = [0 for i in range(len(arr))]
+    dp[0] = max(0, arr[0])
+    for i in range(1, len(arr)):
+        dp[i] = max(dp[i-1] + arr[i], 0)
+    return max(dp)
 
+
+print(max_range_sum([4, -5, 4, -3, 4, 4, -4, 4, -5]))
 # print(arr)
 # build(0, len(arr) - 1)
 # print(tree)
