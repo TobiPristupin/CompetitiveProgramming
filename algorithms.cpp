@@ -42,57 +42,6 @@ run
 backtrace
 */
 
-
-//Example convert to base
-ll to_ternary(ll x){
-    string digits = "";
-    lldiv_t divmod;
-    do {
-        divmod = div(x, 3LL);
-        x = divmod.quot;
-        digits += to_string(divmod.rem);
-        
-    } while (x > 0);
-
-    reverse(digits.begin(), digits.end());
-    return stoll(digits);
-}
-
-
-string to_base(ll x, ll b){
-    string letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    string digits = "";
-    lldiv_t divmod;
-
-    if (b == 1){
-        for (int i = 0; i < x; i++){
-            digits += "1";
-        }
-        return digits;
-    }
-
-    do {
-        divmod = div(x, b);
-        x = divmod.quot;
-        digits += letters.at(divmod.rem);
-    } while (x > 0);
-
-    reverse(digits.begin(), digits.end());
-    return digits;
-}
-
-//Example convert from base to decimal
-ll from_ternary(ll x){
-    ll sum = 0, digit = 0;
-    do {
-        sum += (x % 10) * pow(3, digit);
-        digit++;
-        x /= 10;
-    } while (x > 0);
-    
-    return sum;
-}
-
 vector<ll> sieve_erastothenes(unsigned ll limit){
     vector<bool> prime(limit, true);
     for (int p = 2; p*p <= limit; p++){
@@ -158,21 +107,6 @@ bool valid_parenthesis(string s){
 
     return stak.empty();
 }
-
-
-// int component_size(const char &start){
-//     if (visited[start]){
-//         return 0;
-//     }
-
-//     visited[start] = true;
-//     int sum =  1;
-//     for (char neighbor : graph[start]){
-//         sum += component_size(neighbor);
-//     }
-    
-//     return sum;
-// }
 
 class UnionFind {
     
@@ -241,47 +175,6 @@ void rotate(vector<vector<int>> &vec){
     }
 }
 
-//Add two strings that could overflow if treated as numbers
-string add_strings(string a, string b){
-    string ans = "";
-    bool carry = false;
-    while (a.length() < b.length()) a = "0" + a;
-    while (b.length() < a.length()) b = "0" + b;
-    for (int i = a.length() - 1; i >= 0; i--){
-        int sum = stoi(a.substr(i, 1)) + stoi(b.substr(i, 1));
-        if (carry){
-            sum++;
-            carry = false;
-        }
-        if (sum >= 10){
-            carry = true;
-            sum -= 10;
-        }
-        ans = to_string(sum) + ans;
-    }
-    if (carry) ans = "1" + ans;
-    return ans;
-}
-
-//compare two numbers stored as strings to avoid overflow
-bool compare_strings(string a, string b){
-    while (a.front() == '0') a.erase(a.begin());
-    while (b.front() == '0') b.erase(b.begin());
-    if (a.length() != b.length()) return a.length() > b.length();
-    for (int i = 0; i < a.length(); i++){
-        if (stoi(a.substr(i, 1)) > stoi(b.substr(i, 1))) return true;
-        if (stoi(a.substr(i, 1)) < stoi(b.substr(i, 1))) return false;
-    }
-    return true; 
-}
-
-void all_orderings(){
-    //a must be sorted if you want all orderings because next_permutation gives the next lexicographical permutation in order
-    vector<int> a {1, 2, 3, 4};
-    do {
-    
-    } while (next_permutation(a.begin(), a.end()));
-}
 
 vector<vector<int>> all_subsets(vector<int> vec){
     vector<vector<int>> subsets;
@@ -296,9 +189,4 @@ vector<vector<int>> all_subsets(vector<int> vec){
         }
     }
     return subsets;
-}
-
-
-int main(){
-     
 }
