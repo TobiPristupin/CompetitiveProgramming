@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{enumerate}
+\usepackage[margin=1in]{geometry}
+\usepackage{subfiles}
+
+\lstset{
+language=C++,
+basicstyle=\ttfamily,
+numbers=left,
+numberstyle=\small,
+tabsize=4,
+columns=flexible,
+showstringspaces=false,
+showtabs=false,
+keepspaces,
+captionpos=b,
+escapeinside={<@}{@>}
+}
+
+\title{Competitive Programming Hackpack}
+\author{Tobias Pristupinn}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\subfile{datastructures/datastructures}
+\subfile{algorithms/algorithms}
+\subfile{misc/misc}
+
+\end{document}

@@ -6,4 +6,10 @@ tempCodeRunnerFile.cpp
 test.py
 test.cpp
 CodeForces/input.txt
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.toc
 

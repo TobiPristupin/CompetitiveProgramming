@@ -1,0 +1,25 @@
+\documentclass[../hackpack.tex]{subfiles}
+
+\begin{document}
+
+\section{Algorithms}
+
+\subsection{Sieve of Erastothenes}
+\textit{Construction: $O(n\log{\log{n}})$} 
+\newline
+Generates a vector of every prime number $\leq limit$. The basic idea behind the Sieve of Eratosthenes is that at each iteration one prime number is picked up and all its multiples are eliminated. 
+After the elimination process is complete, all the unmarked numbers that remain are prime.
+\lstinputlisting{sieve_erastothenes.txt}
+
+\subsection{Number of Divisors}
+Returns the number of distinct divisors of a number using the sieve of erastothenes.
+\lstinputlisting[caption=https://www.geeksforgeeks.org/total-number-divisors-given-number/]{num_divisors.txt}
+
+\subsection{Fast Primality Check}
+\lstinputlisting{is_prime.txt}
+
+\subsection{Generate All Subsets}
+\textit{Runtime: $O(2^n)$} 
+\lstinputlisting{all_subsets.txt}
+
+\end{document}

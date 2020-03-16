@@ -1,0 +1,12 @@
+vector<bool> sieve_erastothenes(unsigned ll limit){
+    vector<bool> prime(limit, true);
+    for (int p = 2; p*p <= limit; p++){
+        if (prime[p]){
+            for (int i = p*p; i <= limit; i += p){
+                prime[i] = false;
+            }
+        }
+    }
+
+    return prime;
+}

@@ -1,0 +1,110 @@
+\documentclass[../hackpack.tex]{subfiles}
+
+\begin{document}
+    
+\section{Misc}
+
+\subsection{Program Structure}
+\begin{lstlisting}
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+int main(){
+  ios::sync_with_stdio(0), cin.tie(0); //Fast IO
+}
+\end{lstlisting}
+
+\subsection{Runtime Bounds}
+
+$1$ second : $\leq 10^8$ operations
+\qquad\qquad
+$5$ seconds : $\leq 10^9$ operations
+
+\begin{flushleft}
+  \label{tab:table1}
+  \begin{tabular}{|l|c|} 
+    \hline
+    $n$ & Bound \\
+    \hline
+    $\leq [10..11]$ & $O(n!),O(n^6)$\\
+    $\leq 22$ & $O(2^n)$\\
+    $\leq 100$ & $O(n^4)$\\
+    $\leq 400$ & $O(n^3)$\\
+    $\leq 10K$ & $O(n^2)$\\
+    $\leq 1M$ & $O(n \log_2{n})$\\
+    $\geq 1M$ & $O(n)$\\
+    \hline
+  \end{tabular}
+\end{flushleft}
+
+\subsection{Bitmasks}
+
+\begin{flushleft}
+  \label{tab:table2}
+  \begin{tabular}{|l|l|} 
+    \hline
+    Operation & Result \\
+    \hline
+    Right Shift $>>$ & Shift bits $n$ places to the right. Equivalent to dividing by $2^n$\\
+    Left Shift $<<$ & Shift bits $n$ places to the left. Equivalent to multiplying by $2^n$\\
+    NOT $\sim$ & Flips each bit\\
+    OR $|$ & OR's each bit. Binary operator, requires two different numbers\\
+    AND $\&$ & AND's each bit. Binary operator, requires two different numbers\\
+    XOR \string^ & XOR's each bit. Binary operator, requires two different numbers\\
+    \hline
+  \end{tabular}
+  \newline
+  \newline
+  \textbf{Note:} Never do bitwise operations on a signed integer!
+\end{flushleft}
+
+\subsection{Math}
+\paragraph{Properties of Mod}
+\begin{enumerate}[-]
+  \item $(a+b)\bmod m = (a \bmod m + b \bmod m) \bmod m$
+  \item $(a*b)\bmod m = (a \bmod m * b \bmod m) \bmod m$
+\end{enumerate}
+
+\subsection{STL Data Structures}
+\begin{enumerate}[-]
+  \item \textbf{vector}: Random access, amortized $O(1)$ insertion at end
+  \item \textbf{deque}: $O(1)$ insertion and deletion at ends, \textbf{has $O(1)$ random access also!}
+  \item \textbf{stack/queue}: Provides an interface that wraps around deque
+  \item \textbf{bitset}: Optimized array of booleans
+  \item \textbf{map, unordered\_map, set} 
+  \item \textbf{multiset}: Set with duplicates
+  \item \textbf{priority\_queue}: Max heap
+\end{enumerate}
+
+\subsection{STL Algorithms}
+\begin{enumerate}[-]
+  \item \textbf{Sorting:}
+  \begin{enumerate}[-]
+    \item \lstinline{sort}
+    \item \lstinline{partial_sort}: Sorts a range $[i..j]$ as if sorting normally. However, elements not in $[i..j]$ are in unspecified order.
+    \item \lstinline{stable_sort}: Maintain initial order of items that are equal
+  \end{enumerate} 
+  \item \textbf{Searching:}
+  \begin{enumerate}[-]
+    \item \lstinline{lower_bound}: Iterator pointing to first element $\geq$ \lstinline{val}. Must be sorted beforehand. \lstinline[]{lower_bound(10) ->} $[1, \textcolor{red}{\mathbf{10}}, 10, 10, 23]$. $O(\log{n})$ runtime.
+    \item \lstinline{upper_bound}: Same as \lstinline{lower_bound} but returns first element $>$ \lstinline{val}. \lstinline[]{upper_bound(10) ->} $[1, 10, 10, 10, \textcolor{red}{\mathbf{23}}]$. If an array is sorted, the distance between two elements can be calculated by \lstinline{upper_bound - lower_bound} using pointer arithmetic.
+    \item \lstinline{binary_search}: 
+  \end{enumerate}
+  \item \textbf{Other:}
+  \begin{enumerate}[-]
+    \item \lstinline{next_permutation}: Generates next lexicographically greater permutation. Can be used to generate every ordering if array is sorted beforehand. \lstinline{prev_permutation} also exists.
+    \item \lstinline{partial_sum}: Generates prefix sum array
+  \end{enumerate} 
+\end{enumerate}
+
+\subsection{Debug a segfault}
+\begin{lstlisting}
+g++ -g program.cpp
+gdb ./a.out
+run
+backtrace  
+\end{lstlisting}
+
+
+\end{document}

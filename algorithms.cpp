@@ -52,14 +52,6 @@ vector<ll> sieve_erastothenes(unsigned ll limit){
         }
     }
 
-    vector<ll> ans;
-    for (int i = 2; i <= limit; i++){
-        if (prime[i]){
-            ans.push_back(i);
-        }
-    }
-
-    return ans;
 }
 
 int num_divisors(ll n){
@@ -179,7 +171,7 @@ void rotate(vector<vector<int>> &vec){
 vector<vector<int>> all_subsets(vector<int> vec){
     vector<vector<int>> subsets;
     int n = vec.size();
-    // i << n is the same as 2**n
+    // 1 << n is the same as 2**n
     for (int i = 0; i < (1 << n); i++){
         subsets.push_back(vector<int>());
         for (int j = 0; j < n; j++){

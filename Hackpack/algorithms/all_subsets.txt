@@ -1,0 +1,14 @@
+vector<vector<int>> all_subsets(vector<int> vec){
+    vector<vector<int>> subsets;
+    int n = vec.size();
+    // 1 << n is the same as 2**n
+    for (int i = 0; i < (1 << n); i++){
+        subsets.push_back(vector<int>());
+        for (int j = 0; j < n; j++){
+            if (i & (1 << j)){ //check if bit j is set
+                subsets.back().push_back(vec[j]);
+            }
+        }
+    }
+    return subsets;
+}
