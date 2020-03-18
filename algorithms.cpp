@@ -251,16 +251,12 @@ class SegmentTree {
 
 
 int main(){
-    vector<int> arr = {-2, 2, 4, 1, 7, 1, 3, 2};
-    SegmentTree tree(arr);
-    for (auto x : tree.tree) cout << x << " ";
-    cout << endl;
-    tree.add_range(0, 7, 1);
-    for (auto x : tree.tree) cout << x << " ";
-    cout << endl;
-    cout << tree.rsq(0, 0) << endl;
-    for (auto x : tree.tree) cout << x << " ";
-    cout << endl;
-    for (auto x : tree.lazy) cout << x << " ";
+    vector<deque<int>> a;
+    deque<int> b;
+    b.push_back(124);
+    a.push_back(b);
+    deque<int> caca = a[0];
+    caca.push_back(134);
+    for (auto x : a[0]) cout << x << " ";
     cout << endl;
 }
