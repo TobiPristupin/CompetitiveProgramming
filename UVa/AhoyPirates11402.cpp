@@ -9,10 +9,9 @@ class SegmentTree {
     //Sum implementation with lazy propagation
 
     public:
-        deque<int> arr;
-        vector<int> tree;
+        vector<int> tree, arr;
         vector<int> lazy;
-        SegmentTree(deque<int> arr){
+        SegmentTree(vector<int> arr){
             this->arr = arr;
             tree.assign(arr.size()*4, -1);
             lazy.assign(arr.size()*4, nothing);
@@ -35,8 +34,11 @@ class SegmentTree {
         }
 
         int rsq(int i, int j, int l, int r, int node=1){
-            update_node(l, r, lazy[node], node);
-            if (l != r) propagate_lazy(l, r, node);
+            if (lazy[node] != nothing){
+                update_node(l, r, lazy[node], node);
+                if (l != r) propagate_lazy(l, r, node);
+                lazy[node] = 0;
+            }
 
             if (i <= l && j >= r){ 
                 return tree[node];
@@ -56,8 +58,12 @@ class SegmentTree {
         }
 
         void update(int i, int j, int l, int r, int type, int node=1){
-            update_node(l, r, lazy[node], node);
-            if (l != r) propagate_lazy(l, r, node);
+            if (lazy[node] != nothing){
+                update_node(l, r, lazy[node], node);
+                if (l != r) propagate_lazy(l, r, node);
+                lazy[node] = 0;
+            }
+            
 
             if (i <= l && j >= r){ //current interval is contained fully in [i..j]
                 update_node(l, r,  type, node);
@@ -65,6 +71,7 @@ class SegmentTree {
                 if (l != r){//if we're not at a leaf
                     lazy[node] = type;
                     propagate_lazy(l, r, node);
+                    lazy[node] = 0;
                 }
                 return;
             } else if (i > r || j < l) { //current interval is completely out of [i..j]
@@ -107,7 +114,8 @@ class SegmentTree {
                     else lazy[node*2+1] = inverse;
                 }
             }
-            lazy[node] = 0;
+            
+            lazy[node] = nothing;
         }
 };
 
@@ -118,7 +126,7 @@ int main(){
     for (int tcase = 1; tcase <= tc; tcase++){
         int m;
         cin >> m;
-        deque<int> pirates;
+        vector<int> pirates;
         for (int i = 0; i < m; i++){
             int t;
             string s;
