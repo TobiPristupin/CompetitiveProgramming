@@ -82,24 +82,6 @@ bool is_prime(ll n) {
     return true; 
 } 
 
-bool valid_parenthesis(string s){
-    stack<char> stak;
-    vector<char> opening = {'('}, closing = {')'};
-    for (char c : s){
-        if (find(opening.begin(), opening.end(), c) != opening.end()){
-            stak.push(c);
-        } else if (find(closing.begin(), closing.end(), c) != closing.end()){
-            int index = distance(find(closing.begin(), closing.end(), c), closing.begin());
-            if (stak.empty() || stak.top() != opening[index]){
-                return false;
-            }
-            stak.pop();
-        }
-    }
-
-    return stak.empty();
-}
-
 class UnionFind {
     
     public:
@@ -181,4 +163,73 @@ vector<vector<int>> all_subsets(vector<int> vec){
         }
     }
     return subsets;
+}
+
+class SegmentTree {
+    //Sum implementation
+
+    public:
+        vector<int> arr, tree;
+        SegmentTree(vector<int> arr){
+            this->arr = arr;
+            tree.assign(arr.size()*4, -1);
+            build(0, arr.size()-1);
+        }
+
+        void build(int l, int r, int node=1){
+            if (l == r){
+                tree[node] = arr[l];
+            } else {
+                int mid = (l + r) / 2;
+                build(l, mid, node*2);
+                build(mid + 1, r, node*2+1);
+                tree[node] = tree[node*2] + tree[node*2+1]; //For sum queries
+            }
+        }
+
+        int rsq(int i, int j){
+            return rsq(i, j, 0, arr.size()-1);
+        }
+
+        int rsq(int i, int j, int l, int r, int node=1){
+            //i, j is the range for the query. l, r are the bounds for the current node
+            //i and j are both inclusive
+            if (i <= l && j >= r){ //full coverage
+                return tree[node];
+            } else if (i > r || j < l) { //no coverage
+                return 0; //0 because it shouldn't affect the sum query. If doing a max query, return -infinity.
+            }
+
+            //partial coverage
+            int mid = (l + r) / 2;
+            int left = rsq(i, j, l, mid, node*2);
+            int right = rsq(i, j, mid + 1, r, node*2+1);
+            return left + right; //combine according to query type
+        }
+
+        void add_range(int i, int j, int val){
+            add_range(i, j, 0, arr.size()-1, val);
+        }
+
+        void add_range(int i, int j, int l, int r, int val, int node=1){
+            //Adds val to range [i..j] inclusive
+            if (i > r || j < l) { //no coverage
+                return;
+            } else if (l == r){ //leaf node, do the update
+                tree[node] += val; //change according to query type
+                return;
+            }
+
+            int mid = (l + r) / 2;
+            add_range(i, j, l, mid, val, node*2);
+            add_range(i, j, mid+1, r, val, node*2+1);
+            tree[node] = tree[node*2] + tree[node*2+1];
+        }
+};
+
+
+
+
+int main(){
+
 }

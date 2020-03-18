@@ -13,4 +13,18 @@ Union Find Data Structure, or Disjoint Set, uses an array \textit{\textbf{id}} t
 The following implementation is \textbf{0-indexed}.
 \lstinputlisting{ufds.txt}
 
+\subsection{Segment Tree}
+\textit{Construction: $O(n)$}
+\\
+\textit{Query: $O(\log{n})$}
+\\
+Segment Tree is a data structure that can be used to quickly answer mutliple range queries on an array. It works by creating a binary tree, where each node 
+represents a range of the array. The root node represents the full array, its children represent the left and right halves, and so on.
+\lstinputlisting[caption=
+https://cp-algorithms.com/data\_structures/segment\_tree.html \\\hspace{\textwidth}
+https://www.hackerearth.com/practice/data-structures/advanced-data-structures/segment-trees/tutorial/
+]
+{segment_tree.txt}
+% https://cp-algorithms.com/data_structures/segment_tree.html
+
 \end{document}

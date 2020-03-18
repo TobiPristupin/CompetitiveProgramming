@@ -1,0 +1,35 @@
+void build_segment_tree(int l, int r, int node=1){
+    if (l == r){
+        tree[node] = arr[l];
+    } else {
+        int mid = (l + r) / 2;
+        build_segment_tree(l, mid, node*2);
+        build_segment_tree(mid + 1, r, node*2+1);
+        tree[node] = tree[node*2] + tree[node*2+1]; //For sum queries
+    }
+}
+
+int sum_query(int i, int j, int l, int r, int node=1){
+    //i, j is the range for the query. l, r are the bounds for the current node
+    //i and j are both inclusive
+    if (i <= l && j >= r){ //full coverage
+        return tree[node];
+    } else if (i > r || j < l) { //no coverage
+        return 0; //0 because it shouldn't affect the sum query. If doing a max query, return -infinity.
+    }
+
+    //partial coverage
+    int mid = (l + r) / 2;
+    int left = sum_query(i, j, l, mid, node*2);
+    int right = sum_query(i, j, mid + 1, r, node*2+1);
+    return left + right; //combine according to query type
+}
+
+vector<int> arr = {1, 3, -2, 8, -7};
+vector<int> tree(arr.size()*4, -1);
+
+int main(){
+    build_segment_tree(0, arr.size() - 1);
+    int i = 0, j = 2;
+    cout << sum_query(i, j, 0, arr.size() - 1) << endl;
+}
