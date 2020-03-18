@@ -166,13 +166,14 @@ vector<vector<int>> all_subsets(vector<int> vec){
 }
 
 class SegmentTree {
-    //Sum implementation
+    //Sum implementation with lazy propagation
 
     public:
-        vector<int> arr, tree;
+        vector<int> arr, tree, lazy;
         SegmentTree(vector<int> arr){
             this->arr = arr;
             tree.assign(arr.size()*4, -1);
+            lazy.assign(arr.size()*4, 0);
             build(0, arr.size()-1);
         }
 
@@ -194,13 +195,15 @@ class SegmentTree {
         int rsq(int i, int j, int l, int r, int node=1){
             //i, j is the range for the query. l, r are the bounds for the current node
             //i and j are both inclusive
-            if (i <= l && j >= r){ //full coverage
+            update_and_propagate(l, r, node);
+
+            if (i <= l && j >= r){ //current interval is contained fully in [i..j]
                 return tree[node];
-            } else if (i > r || j < l) { //no coverage
+            } else if (i > r || j < l) { //current interval is completely out of [i..j]
                 return 0; //0 because it shouldn't affect the sum query. If doing a max query, return -infinity.
             }
 
-            //partial coverage
+            //current interval is contained partially in [i..j]
             int mid = (l + r) / 2;
             int left = rsq(i, j, l, mid, node*2);
             int right = rsq(i, j, mid + 1, r, node*2+1);
@@ -212,12 +215,17 @@ class SegmentTree {
         }
 
         void add_range(int i, int j, int l, int r, int val, int node=1){
-            //Adds val to range [i..j] inclusive
-            if (i > r || j < l) { //no coverage
+            update_and_propagate(l, r, node);
+
+            if (i <= l && j >= r){ //current interval is contained fully in [i..j]
+                tree[node] += (r - l + 1) * val;//do update
+                if (l != r){//if we're not at a leaf
+                    lazy[node*2] += val;//mark update to be done later in both child nodes
+                    lazy[node*2+1] += val;
+                }
                 return;
-            } else if (l == r){ //leaf node, do the update
-                tree[node] += val; //change according to query type
-                return;
+            } else if (i > r || j < l) { //current interval is completely out of [i..j]
+                return; 
             }
 
             int mid = (l + r) / 2;
@@ -225,11 +233,34 @@ class SegmentTree {
             add_range(i, j, mid+1, r, val, node*2+1);
             tree[node] = tree[node*2] + tree[node*2+1];
         }
+
+        //Checks if an update is pending for the current node and does it if necessary. Then it propagates the update downwards
+        void update_and_propagate(int l, int r, int node){
+            if (lazy[node] != 0){//If pending updates to current node
+                tree[node] += (r - l + 1) * lazy[node];//do the update.
+                if (l != r){//not a leaf node
+                    lazy[node*2] += lazy[node];//propagate the update one level downwards
+                    lazy[node*2+1] += lazy[node];  
+                }
+                lazy[node] = 0;//remove the update for this node 
+            }
+        }
 };
 
 
 
 
 int main(){
-
+    vector<int> arr = {-2, 2, 4, 1, 7, 1, 3, 2};
+    SegmentTree tree(arr);
+    for (auto x : tree.tree) cout << x << " ";
+    cout << endl;
+    tree.add_range(0, 7, 1);
+    for (auto x : tree.tree) cout << x << " ";
+    cout << endl;
+    cout << tree.rsq(0, 0) << endl;
+    for (auto x : tree.tree) cout << x << " ";
+    cout << endl;
+    for (auto x : tree.lazy) cout << x << " ";
+    cout << endl;
 }
