@@ -247,16 +247,54 @@ class SegmentTree {
         }
 };
 
+// class SegmentTree {
+
+//     public:
+//         vector<int> arr, tree;
+//         SegmentTree(vector<int> arr){
+//             this->arr = arr;
+//             tree.assign(arr.size()*4, -1);
+//             build(0, arr.size()-1);
+//         }
+
+//         void build(int l, int r, int node=1){
+//             if (l == r){
+//                 tree[node] = arr[l];
+//             } else {
+//                 int mid = (l + r) / 2;
+//                 build(l, mid, node*2);
+//                 build(mid + 1, r, node*2+1);
+//                 tree[node] = tree[node*2] + tree[node*2+1]; //For sum queries
+//             }
+//         }
+
+//         void update(int i, int v){
+//             update(i, 0, arr.size()-1, v);
+//         }
+
+//         void update(int i, int l, int r, int val, int node=1){
+//             if (l == r){
+//                 tree[node] = val;
+//             } else {
+//                 int mid = (l + r) / 2;
+//                 if (i <= mid){
+//                     update(i, l, mid, val, node*2);
+//                 } else {
+//                     update(i, mid+1, r, val, node*2+1);
+//                 }
+
+//                 tree[node] = tree[node*2] + tree[node*2+1];
+//             }
+//         }
+// };
+
 
 
 
 int main(){
-    vector<deque<int>> a;
-    deque<int> b;
-    b.push_back(124);
-    a.push_back(b);
-    deque<int> caca = a[0];
-    caca.push_back(134);
-    for (auto x : a[0]) cout << x << " ";
+    vector<int> arr = {1, 3, -2, 8, -7};
+    SegmentTree tree(arr);
+    tree.update(0, 3);
+    for (auto x : tree.tree) cout << x << " ";
     cout << endl;
 }
