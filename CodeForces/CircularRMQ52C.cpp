@@ -43,7 +43,7 @@ class SegmentTree {
             if (i <= l && j >= r){ //current llerval is contained fully in [i..j]
                 return tree[node];
             } else if (i > r || j < l) { //current llerval is completely out of [i..j]
-                return pow(10, 6) + 1; //0 because it shouldn't affect the sum query. If doing a max query, return -infinity.
+                return LLONG_MAX; //0 because it shouldn't affect the sum query. If doing a max query, return -infinity.
             }
 
             //current llerval is contained partially in [i..j]
@@ -117,9 +117,6 @@ int main(){
                 tree.add_range(i, j, v);
             }
         }
-
-        // for (auto x : tree.tree) cout << x << " ";
-        // cout << endl;
 
     }
 }

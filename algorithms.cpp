@@ -165,95 +165,15 @@ vector<vector<int>> all_subsets(vector<int> vec){
     return subsets;
 }
 
-class SegmentTree {
-    //Sum implementation with lazy propagation
-
-    public:
-        vector<int> arr, tree, lazy;
-        SegmentTree(vector<int> arr){
-            this->arr = arr;
-            tree.assign(arr.size()*4, -1);
-            lazy.assign(arr.size()*4, 0);
-            build(0, arr.size()-1);
-        }
-
-        void build(int l, int r, int node=1){
-            if (l == r){
-                tree[node] = arr[l];
-            } else {
-                int mid = (l + r) / 2;
-                build(l, mid, node*2);
-                build(mid + 1, r, node*2+1);
-                tree[node] = tree[node*2] + tree[node*2+1]; //For sum queries
-            }
-        }
-
-        int rsq(int i, int j){
-            return rsq(i, j, 0, arr.size()-1);
-        }
-
-        int rsq(int i, int j, int l, int r, int node=1){
-            //i, j is the range for the query. l, r are the bounds for the current node
-            //i and j are both inclusive
-            update_and_propagate(l, r, node);
-
-            if (i <= l && j >= r){ //current interval is contained fully in [i..j]
-                return tree[node];
-            } else if (i > r || j < l) { //current interval is completely out of [i..j]
-                return 0; //0 because it shouldn't affect the sum query. If doing a max query, return -infinity.
-            }
-
-            //current interval is contained partially in [i..j]
-            int mid = (l + r) / 2;
-            int left = rsq(i, j, l, mid, node*2);
-            int right = rsq(i, j, mid + 1, r, node*2+1);
-            return left + right; //combine according to query type
-        }
-
-        void add_range(int i, int j, int val){
-            add_range(i, j, 0, arr.size()-1, val);
-        }
-
-        void add_range(int i, int j, int l, int r, int val, int node=1){
-            update_and_propagate(l, r, node);
-
-            if (i <= l && j >= r){ //current interval is contained fully in [i..j]
-                tree[node] += (r - l + 1) * val;//do update
-                if (l != r){//if we're not at a leaf
-                    lazy[node*2] += val;//mark update to be done later in both child nodes
-                    lazy[node*2+1] += val;
-                }
-                return;
-            } else if (i > r || j < l) { //current interval is completely out of [i..j]
-                return; 
-            }
-
-            int mid = (l + r) / 2;
-            add_range(i, j, l, mid, val, node*2);
-            add_range(i, j, mid+1, r, val, node*2+1);
-            tree[node] = tree[node*2] + tree[node*2+1];
-        }
-
-        //Checks if an update is pending for the current node and does it if necessary. Then it propagates the update downwards
-        void update_and_propagate(int l, int r, int node){
-            if (lazy[node] != 0){//If pending updates to current node
-                tree[node] += (r - l + 1) * lazy[node];//do the update.
-                if (l != r){//not a leaf node
-                    lazy[node*2] += lazy[node];//propagate the update one level downwards
-                    lazy[node*2+1] += lazy[node];  
-                }
-                lazy[node] = 0;//remove the update for this node 
-            }
-        }
-};
-
 // class SegmentTree {
+//     //Sum implementation with lazy propagation
 
 //     public:
-//         vector<int> arr, tree;
+//         vector<int> arr, tree, lazy;
 //         SegmentTree(vector<int> arr){
 //             this->arr = arr;
 //             tree.assign(arr.size()*4, -1);
+//             lazy.assign(arr.size()*4, 0);
 //             build(0, arr.size()-1);
 //         }
 
@@ -268,33 +188,112 @@ class SegmentTree {
 //             }
 //         }
 
-//         void update(int i, int v){
-//             update(i, 0, arr.size()-1, v);
+//         int rsq(int i, int j){
+//             return rsq(i, j, 0, arr.size()-1);
 //         }
 
-//         void update(int i, int l, int r, int val, int node=1){
-//             if (l == r){
-//                 tree[node] = val;
-//             } else {
-//                 int mid = (l + r) / 2;
-//                 if (i <= mid){
-//                     update(i, l, mid, val, node*2);
-//                 } else {
-//                     update(i, mid+1, r, val, node*2+1);
-//                 }
+//         int rsq(int i, int j, int l, int r, int node=1){
+//             //i, j is the range for the query. l, r are the bounds for the current node
+//             //i and j are both inclusive
+//             update_and_propagate(l, r, node);
 
-//                 tree[node] = tree[node*2] + tree[node*2+1];
+//             if (i <= l && j >= r){ //current interval is contained fully in [i..j]
+//                 return tree[node];
+//             } else if (i > r || j < l) { //current interval is completely out of [i..j]
+//                 return 0; //0 because it shouldn't affect the sum query. If doing a max query, return -infinity.
+//             }
+
+//             //current interval is contained partially in [i..j]
+//             int mid = (l + r) / 2;
+//             int left = rsq(i, j, l, mid, node*2);
+//             int right = rsq(i, j, mid + 1, r, node*2+1);
+//             return left + right; //combine according to query type
+//         }
+
+//         void add_range(int i, int j, int val){
+//             add_range(i, j, 0, arr.size()-1, val);
+//         }
+
+//         void add_range(int i, int j, int l, int r, int val, int node=1){
+//             update_and_propagate(l, r, node);
+
+//             if (i <= l && j >= r){ //current interval is contained fully in [i..j]
+//                 tree[node] += (r - l + 1) * val;//do update
+//                 if (l != r){//if we're not at a leaf
+//                     lazy[node*2] += val;//mark update to be done later in both child nodes
+//                     lazy[node*2+1] += val;
+//                 }
+//                 return;
+//             } else if (i > r || j < l) { //current interval is completely out of [i..j]
+//                 return; 
+//             }
+
+//             int mid = (l + r) / 2;
+//             add_range(i, j, l, mid, val, node*2);
+//             add_range(i, j, mid+1, r, val, node*2+1);
+//             tree[node] = tree[node*2] + tree[node*2+1];
+//         }
+
+//         //Checks if an update is pending for the current node and does it if necessary. Then it propagates the update downwards
+//         void update_and_propagate(int l, int r, int node){
+//             if (lazy[node] != 0){//If pending updates to current node
+//                 tree[node] += (r - l + 1) * lazy[node];//do the update.
+//                 if (l != r){//not a leaf node
+//                     lazy[node*2] += lazy[node];//propagate the update one level downwards
+//                     lazy[node*2+1] += lazy[node];  
+//                 }
+//                 lazy[node] = 0;//remove the update for this node 
 //             }
 //         }
 // };
+
+class SegmentTree {
+
+    public:
+        vector<int> arr, tree;
+        SegmentTree(vector<int> arr){
+            this->arr = arr;
+            tree.assign(arr.size()*4, -1);
+            build(0, arr.size()-1);
+        }
+
+        void build(int l, int r, int node=1){
+            if (l == r){
+                tree[node] = arr[l];
+            } else {
+                int mid = (l + r) / 2;
+                build(l, mid, node*2);
+                build(mid + 1, r, node*2+1);
+                tree[node] = max(tree[node*2], tree[node*2+1]); //For sum queries
+            }
+        }
+
+        void update(int i, int v){
+            update(i, 0, arr.size()-1, v);
+        }
+
+        void update(int i, int l, int r, int val, int node=1){
+            if (l == r){
+                tree[node] = val;
+            } else {
+                int mid = (l + r) / 2;
+                if (i <= mid){
+                    update(i, l, mid, val, node*2);
+                } else {
+                    update(i, mid+1, r, val, node*2+1);
+                }
+
+                tree[node] = tree[node*2] + tree[node*2+1];
+            }
+        }
+};
 
 
 
 
 int main(){
-    vector<int> arr = {1, 3, -2, 8, -7};
+    vector<int> arr = {2, 2, 4, 4, 4, 4, 1, 3, 3, 3};
     SegmentTree tree(arr);
-    tree.update(0, 3);
     for (auto x : tree.tree) cout << x << " ";
     cout << endl;
 }
