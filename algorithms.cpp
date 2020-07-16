@@ -288,6 +288,22 @@ class SegmentTree {
         }
 };
 
+void bfs(vector<vector<int>> graph, int start){
+    vector<bool> visited(graph.size(), false);
+    queue<int> search;
+    search.push(start);
+
+    while (!search.empty()){
+        int node = search.front();
+        search.pop();
+        if (!visited[node]){
+            visited[node] = true;
+            for (int neighbor : graph[node]){
+                search.push(neighbor);
+            }
+        }
+    }
+}
 
 
 
